@@ -58,9 +58,11 @@ body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:"Tajawal
 @keyframes pl{50%{opacity:.25;transform:scale(1.5)}}
 .search{width:100%;height:52px;border-radius:18px;padding:0 18px;color:var(--ink);font:inherit;margin-bottom:16px}
 .search::placeholder{color:var(--mute)}
-.login{padding:26px 22px;border-radius:32px}
+.login{padding:30px 24px;border-radius:36px;border:1px solid rgba(255,255,255,.07);box-shadow:inset 0 0 22px rgba(255,255,255,.07),0 22px 60px rgba(0,0,0,.35),0 0 0 6px rgba(255,255,255,.03)}
+[data-theme=light] .login{border-color:rgba(255,255,255,.7)}
+.login::before{border-radius:36px}
 .login label{display:block;font-size:.88rem;color:var(--mute);margin:14px 0 6px}
-.login input{width:100%;height:52px;border-radius:14px;border:1px solid var(--line);background:var(--field);color:var(--ink);font:inherit;font-size:1rem;padding:0 16px}
+.login input{width:100%;height:54px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:var(--field);color:var(--ink);font:inherit;font-size:1rem;padding:0 16px}
 .btn{position:relative;overflow:hidden;width:100%;height:56px;margin-top:22px;border:0;border-radius:18px;font:inherit;font-weight:700;font-size:1.05rem;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:0 12px 28px rgba(241,90,45,.4),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
 .btn:active{transform:scale(.96)}
 .btn::after{content:"";position:absolute;top:0;bottom:0;width:50%;left:-70%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg)}
@@ -89,6 +91,23 @@ details[open] summary::after{transform:rotate(45deg)}
 .rep{padding:16px 18px;border-top:1px solid var(--line);position:relative}
 .rep pre{margin:0;white-space:pre-wrap;font-family:inherit;font-size:.96rem}
 .tl .rep{border:1px solid var(--line);border-radius:20px;margin-bottom:12px}
+.dh,.tile,.tx{position:relative}
+.dh>*,.tile>*,.tx>*{position:relative}
+.dh{padding:28px 22px;text-align:center;border-radius:34px;margin-bottom:14px}
+.dh .cn{font-size:2.2rem;font-weight:800;line-height:1.25;background:linear-gradient(135deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.dh .dn{display:inline-block;margin-top:10px;padding:4px 18px;border-radius:99px;background:rgba(241,90,45,.16);color:var(--brand2);font-weight:700;font-size:.92rem}
+.dt{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:18px;padding:12px 18px;border-radius:20px;background:rgba(241,90,45,.12);font-size:1.3rem;font-weight:800}
+.dt svg{width:26px;height:26px;stroke:var(--brand2);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.tile{padding:20px 12px;text-align:center;border-radius:28px}
+.tile b{display:block;font-size:2.1rem;font-weight:800;line-height:1.2}
+.tile.a b{color:var(--brand2)}
+.tile span{color:var(--mute);font-size:.88rem}
+.tx{padding:22px;border-radius:30px;margin-bottom:14px}
+.tx h3{margin:0 0 8px;font-size:.95rem;color:var(--brand2);font-weight:700}
+.tx p{margin:0;white-space:pre-wrap}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:6px 16px;border-radius:99px;background:rgba(241,90,45,.14);border:1px solid var(--line);font-size:.93rem}
 .note{text-align:center;color:var(--mute);font-size:.8rem;margin-top:22px}
 .empty{text-align:center;color:var(--mute);padding:40px 0}
 .nav{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);left:50%;transform:translateX(-50%);display:none;align-items:center;gap:2px;padding:6px;border-radius:28px;z-index:20}
@@ -189,13 +208,30 @@ function ring(v,t,nm){
  return '<div class="glass ring"><svg viewBox="0 0 100 100"><circle class="tr" cx="50" cy="50" r="44" fill="none" stroke-width="8"/><circle class="pg" cx="50" cy="50" r="44" fill="none" stroke-width="8" stroke-dasharray="'+C+'" stroke-dashoffset="'+C+'" data-to="'+(C*(1-p/100))+'"/></svg><div class="pc" data-n="'+p+'" data-s="٪">'+fmt(p)+'٪</div><div class="nm">'+nm+'</div><div class="sb">'+fmt(v)+' من '+fmt(t)+'<br>الباقي '+fmt(t-v)+'</div></div>';
 }
 function blocks(n){return String(n||"").split(/\n\s*ـ{5,}\s*\n/).filter(function(s){return s.trim()})}
+function a2(s){return String(s).replace(/[٠-٩]/g,function(c){return "٠١٢٣٤٥٦٧٨٩".indexOf(c)})}
+function gv(t,re){var m=t.match(re);return m?m[1].trim():""}
+function nv(t,re){var m=t.match(re);return m?+a2(m[1]).replace(/[,،]/g,""):null}
+function dayView(raw,name){
+ var t=raw.trim(),day=gv(t,/اليوم\s*([\d٠-٩]+)/),date=gv(t,/التاريخ:\s*(.+)/),
+ note=gv(t,/التقرير:\s*([\s\S]*?)(?=\n\s*تم نحت:|$)/),
+ c=nv(t,/تم نحت:\s*([\d٠-٩.,،]+)/),g=nv(t,/تم تلصيق:\s*([\d٠-٩.,،]+)/),
+ rc=nv(t,/باقي النحت:\s*([\d٠-٩.,،]+)/),rg=nv(t,/باقي التلصيق:\s*([\d٠-٩.,،]+)/),
+ w=gv(t,/المطامطه:\s*([\s\S]*)$/);
+ var T=[[c,"تم نحت اليوم",1],[g,"تم تلصيق اليوم",1],[rc,"باقي النحت",0],[rg,"باقي التلصيق",0]].filter(function(x){return x[0]!==null});
+ var o='<div class="glass dh"><div class="cn">'+esc(name)+'</div>'+(day?'<span class="dn">اليوم '+fmt(+a2(day))+'</span>':'')+(date?'<div class="dt">'+I.week+'<span>'+esc(date)+'</span></div>':'')+'</div>';
+ if(T.length)o+='<div class="dg">'+T.map(function(x){return '<div class="glass tile'+(x[2]?' a':'')+'"><b data-n="'+x[0]+'">'+fmt(x[0])+'</b><span>'+x[1]+'</span></div>'}).join("")+'</div>';
+ if(note)o+='<div class="glass tx"><h3>التقرير</h3><p>'+esc(note)+'</p></div>';
+ var ws=w.split(/[\n,،]+/).map(function(s){return s.replace(/^[-•\s]+/,"").trim()}).filter(Boolean);
+ if(ws.length)o+='<div class="glass tx"><h3>المطامطه</h3><div class="chips">'+ws.map(function(s){return '<span class="chip">'+esc(s)+'</span>'}).join("")+'</div></div>';
+ if(!day&&!date&&!note&&!T.length)o+='<div class="glass tx"><p>'+esc(t)+'</p></div>';
+ return o}
 function report(id,type,kind){
  loadR(id).then(function(d){
   var back="#/c/"+id+"/"+kind;
   if(!d){show(topbar("تعذر التحميل",back)+'<div class="empty">لم يتم العثور على بيانات هذا التقرير</div>');return}
   var b=blocks(d.notes),h=topbar(d.name,back);
   if(type==="day"){
-   h+='<div class="rep-head"><h1>التقرير اليومي</h1><p>آخر تقرير مسجل</p></div><div class="glass rep" style="border-top:0">'+(b.length?'<pre>'+esc(b[b.length-1].trim())+'</pre>':'<div class="empty">لا توجد تقارير</div>')+'</div>';
+   h+='<div class="rep-head"><h1>التقرير اليومي</h1><p>آخر تقرير مسجل</p></div>'+(b.length?dayView(b[b.length-1],d.name):'<div class="empty">لا توجد تقارير</div>');
   }else if(type==="full"){
    h+='<div class="rep-head"><h1>التقرير المفصل</h1><p>'+fmt(b.length)+' تقرير</p></div><div class="tl">'+b.map(function(s){return '<div class="rep"><pre>'+esc(s.trim())+'</pre></div>'}).join("")+'</div>';
   }else{
