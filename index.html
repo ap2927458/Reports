@@ -6,11 +6,12 @@
 <title>تقارير الحملات | The Best</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" media="print" onload="this.media='all'">
 <style>
-:root{--bg:#0b0b0d;--ink:#f6f6f7;--mute:#a1a1aa;--brand:#f15a2d;--brand2:#ff9a3c;--gl1:rgba(255,255,255,.17);--gl2:rgba(255,255,255,.04);--line:rgba(255,255,255,.17);--hi:rgba(255,255,255,.4);--field:rgba(0,0,0,.35);--track:rgba(255,255,255,.12);--sh:0 14px 38px rgba(0,0,0,.32);color-scheme:dark}
-[data-theme=light]{--bg:#efeae5;--ink:#1c1c1f;--mute:#6d6d75;--gl1:rgba(255,255,255,.8);--gl2:rgba(255,255,255,.34);--line:rgba(255,255,255,.95);--hi:#fff;--field:rgba(255,255,255,.75);--track:rgba(0,0,0,.1);--sh:0 12px 32px rgba(120,80,50,.16);color-scheme:light}
+:root{--bg:#0b0b0d;--ink:#f6f6f7;--mute:#a1a1aa;--brand:#f15a2d;--brand2:#ff9a3c;--gl1:rgba(255,255,255,.17);--gl2:rgba(255,255,255,.04);--line:rgba(255,255,255,.17);--hi:rgba(255,255,255,.4);--field:rgba(0,0,0,.35);--track:rgba(255,255,255,.12);--sh:0 14px 38px rgba(0,0,0,.32);--bgi:radial-gradient(75% 38% at 85% 0%,rgba(241,90,45,.5),transparent 72%),radial-gradient(60% 34% at 0% 62%,rgba(255,154,60,.22),transparent 72%),radial-gradient(70% 32% at 100% 100%,rgba(179,38,30,.34),transparent 72%);color-scheme:dark}
+[data-theme=light]{--bg:#efeae5;--ink:#1c1c1f;--mute:#6d6d75;--gl1:rgba(255,255,255,.8);--gl2:rgba(255,255,255,.34);--line:rgba(255,255,255,.95);--hi:#fff;--field:rgba(255,255,255,.75);--track:rgba(0,0,0,.1);--sh:0 12px 32px rgba(120,80,50,.16);--bgi:radial-gradient(75% 38% at 85% 0%,rgba(241,90,45,.3),transparent 72%),radial-gradient(60% 34% at 0% 70%,rgba(255,154,60,.3),transparent 72%),radial-gradient(70% 30% at 100% 100%,rgba(241,90,45,.18),transparent 72%);color-scheme:light}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0}
-body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:"Tajawal",-apple-system,"Segoe UI",sans-serif;line-height:1.7;transition:background .4s,color .4s}
+html{min-height:100%;background-color:var(--bg);background-image:var(--bgi);background-repeat:no-repeat;transition:background-color .4s}
+body{min-height:100vh;min-height:100dvh;background:transparent;color:var(--ink);font-family:"Tajawal",-apple-system,"Segoe UI",sans-serif;line-height:1.7;transition:background .4s,color .4s}
 .blobs{position:fixed;inset:0;overflow:hidden;z-index:-1;pointer-events:none}
 .blobs i{position:absolute;border-radius:50%;filter:blur(64px);opacity:.6;animation:fl 20s ease-in-out infinite alternate}
 .blobs i:nth-child(1){width:300px;height:300px;background:#f15a2d;top:-90px;right:-70px}
