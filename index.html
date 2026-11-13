@@ -167,7 +167,7 @@ function after(){var r=document.querySelectorAll(".pg"),n=document.querySelector
  for(i=0;i<n.length;i++)cu(n[i])}
 function loadC(){
  if(camps)return Promise.resolve(camps);
- return fetch("campaigns.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){camps=j.campaigns||j}).catch(function(){camps=DEMO_C;demo=true}).then(function(){return camps});
+ return fetch("campaigns.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){var c=j.campaigns||j;if(!Array.isArray(c))c=Object.keys(c).map(function(k){return{id:c[k].id,name:k,status:c[k].status}});camps=c}).catch(function(){camps=DEMO_C;demo=true}).then(function(){return camps});
 }
 function loadR(id){
  if(cache[id])return Promise.resolve(cache[id]);
